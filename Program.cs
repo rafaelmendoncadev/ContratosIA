@@ -108,5 +108,6 @@ static string ParsePostgresUrl(string url)
     var username = Uri.EscapeDataString(userInfo[0]);
     var password = userInfo.Length > 1 ? Uri.EscapeDataString(userInfo[1]) : "";
     var database = uri.AbsolutePath.TrimStart('/');
-    return $"Host={uri.Host};Port={uri.Port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+    var port = uri.Port > 0 ? uri.Port : 5432;
+    return $"Host={uri.Host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
 }

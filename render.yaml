@@ -9,7 +9,7 @@ services:
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
-      - key: ConnectionStrings__DefaultConnection
+      - key: DATABASE_URL
         sync: false
       - key: OpenRouter__ApiKey
         sync: false
