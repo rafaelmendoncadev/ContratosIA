@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "Erro";
+    Layout = "_Layout";
+}
+
+<div class="min-h-screen flex items-center justify-center py-24 px-margin-mobile">
+    <div class="bg-surface-container-lowest w-full max-w-md p-stack-lg rounded-xl shadow-2xl border border-outline-variant text-center">
+        <div class="w-16 h-16 bg-error-container rounded-full flex items-center justify-center mx-auto mb-stack-md">
+            <span class="material-symbols-outlined text-error text-[32px]">error</span>
+        </div>
+        <h1 class="font-headline-md text-headline-md text-on-background mb-stack-sm">Ocorreu um erro</h1>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-stack-lg">
+            Algo deu errado ao processar sua solicitação. Tente novamente em instantes.
+        </p>
+        <a asp-controller="Home" asp-action="Index"
+           class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-full hover:shadow-xl transition-all scale-100 active:scale-95 no-underline inline-block">
+            Voltar ao início
+        </a>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 using ContratosIA.Data;
 using ContratosIA.Models.Entities;
 using ContratosIA.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,13 @@ builder.Services.AddScoped<IContratoService, ContratoService>();
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -56,15 +64,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseForwardedHeaders();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-app.Use(async (context, next) =>
-{
-    context.Response.Headers["X-Frame-Options"] = "SAMEORIGIN";
-    context.Response.Headers["Content-Security-Policy"] = "frame-ancestors 'self'";
-    await next();
-});
 
 app.UseRouting();
 app.UseAuthentication();
