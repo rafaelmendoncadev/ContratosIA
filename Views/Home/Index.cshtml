@@ -1,63 +1,134 @@
-@using ContratosIA.Models.Enums
+﻿@using ContratosIA.Models.Enums
 @{
     ViewData["Title"] = "Contratos jurídicos profissionais em minutos";
     Layout = "_Layout";
 }
 
-<section class="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-24">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-        <h1 class="text-5xl font-bold mb-6">Gere contratos jurídicos profissionais em minutos</h1>
-        <p class="text-xl text-blue-100 mb-10">
-            Powered by IA. Sem advogados. Sem complicação.
-            Prestação de serviços, software, consultoria e muito mais.
-        </p>
-        <a asp-controller="Account" asp-action="Register"
-           class="bg-white text-blue-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 inline-block">
-            Começar grátis
-        </a>
-    </div>
-</section>
-
-<section class="py-20 max-w-6xl mx-auto px-4">
-    <h2 class="text-3xl font-bold text-center mb-12">Por que usar o ContratoIA?</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white p-6 rounded-xl shadow-sm border text-center">
-            <div class="text-4xl mb-4">&#9889;</div>
-            <h3 class="text-xl font-semibold mb-2">Rápido</h3>
-            <p class="text-gray-600">Contrato completo gerado em menos de 1 minuto</p>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm border text-center">
-            <div class="text-4xl mb-4">&#9878;</div>
-            <h3 class="text-xl font-semibold mb-2">Jurídico</h3>
-            <p class="text-gray-600">Cláusulas obrigatórias brasileiras incluídas automaticamente</p>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm border text-center">
-            <div class="text-4xl mb-4">&#128196;</div>
-            <h3 class="text-xl font-semibold mb-2">PDF profissional</h3>
-            <p class="text-gray-600">Baixe em PDF pronto para assinar</p>
-        </div>
-    </div>
-</section>
-
-<section class="bg-white py-16">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-        <h2 class="text-3xl font-bold mb-8">Tipos de contrato disponíveis</h2>
-        <div class="flex flex-wrap justify-center gap-3">
-            @foreach (var tipo in Enum.GetValues<TipoContrato>())
-            {
-                <span class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full font-medium">
-                    @tipo.ToLabel()
+<main class="pt-24">
+    <!-- Hero Section -->
+    <section class="px-margin-desktop max-w-container-max mx-auto mb-32">
+        <div class="hero-gradient rounded-full p-stack-lg md:p-32 text-center relative overflow-hidden border border-white">
+            <div class="relative z-10 max-w-4xl mx-auto">
+                <span class="inline-block bg-primary-container text-on-primary-container text-label-md font-label-md px-4 py-1 rounded-full mb-stack-md">
+                    INTELIGÊNCIA ARTIFICIAL JURÍDICA
                 </span>
-            }
+                <h1 class="font-headline-xl text-headline-xl text-primary mb-stack-md leading-tight">
+                    Gere contratos jurídicos profissionais em minutos
+                </h1>
+                <p class="font-body-lg text-body-lg text-secondary mb-stack-lg max-w-2xl mx-auto">
+                    Powered by IA. Sem advogados. Sem complicação. Prestação de serviços, software, consultoria e muito mais.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-stack-md">
+                    <a asp-controller="Account" asp-action="Register"
+                       class="bg-primary text-on-primary font-headline-md text-headline-md px-10 py-5 rounded-full hover:shadow-xl transition-all scale-100 active:scale-95 no-underline inline-block">
+                        Começar grátis
+                    </a>
+                    <a asp-controller="Account" asp-action="Register"
+                       class="border-2 border-primary text-primary font-headline-md text-headline-md px-10 py-5 rounded-full hover:bg-primary-fixed transition-all scale-100 active:scale-95 no-underline inline-block">
+                        Ver modelos
+                    </a>
+                </div>
+            </div>
+            <!-- Abstract visual elements -->
+            <div class="absolute -bottom-20 -right-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+            <div class="absolute -top-20 -left-20 w-96 h-96 bg-tertiary/5 rounded-full blur-3xl"></div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="py-20 text-center bg-gray-50">
-    <h2 class="text-3xl font-bold mb-4">Pronto para criar seu primeiro contrato?</h2>
-    <p class="text-gray-600 mb-8">Grátis. Sem cartão de crédito.</p>
-    <a asp-controller="Account" asp-action="Register"
-       class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 inline-block">
-        Criar conta grátis
-    </a>
-</section>
+    <!-- Features Bento Grid -->
+    <section class="px-margin-desktop max-w-container-max mx-auto mb-32">
+        <div class="text-center mb-16">
+            <h2 class="font-headline-lg text-headline-lg text-primary mb-stack-sm">Tecnologia que garante segurança</h2>
+            <div class="h-1 w-20 bg-primary mx-auto rounded-full"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg">
+            <!-- Card: Rápido -->
+            <div class="bg-surface p-stack-lg rounded-full bento-card border border-white flex flex-col items-center text-center group hover:translate-y-[-4px] transition-transform">
+                <div class="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-stack-md group-hover:bg-primary transition-colors">
+                    <span class="material-symbols-outlined text-primary group-hover:text-on-primary text-[32px]">bolt</span>
+                </div>
+                <h3 class="font-headline-md text-headline-md text-on-background mb-stack-sm">Rápido</h3>
+                <p class="font-body-md text-body-md text-secondary">
+                    Contrato completo gerado em menos de 1 minuto, otimizando seu tempo para o que realmente importa.
+                </p>
+            </div>
+            <!-- Card: Jurídico -->
+            <div class="bg-surface p-stack-lg rounded-full bento-card border border-white flex flex-col items-center text-center group hover:translate-y-[-4px] transition-transform">
+                <div class="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-stack-md group-hover:bg-primary transition-colors">
+                    <span class="material-symbols-outlined text-primary group-hover:text-on-primary text-[32px]">gavel</span>
+                </div>
+                <h3 class="font-headline-md text-headline-md text-on-background mb-stack-sm">Jurídico</h3>
+                <p class="font-body-md text-body-md text-secondary">
+                    Cláusulas obrigatórias brasileiras incluídas automaticamente seguindo a legislação vigente.
+                </p>
+            </div>
+            <!-- Card: PDF Profissional -->
+            <div class="bg-surface p-stack-lg rounded-full bento-card border border-white flex flex-col items-center text-center group hover:translate-y-[-4px] transition-transform">
+                <div class="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mb-stack-md group-hover:bg-primary transition-colors">
+                    <span class="material-symbols-outlined text-primary group-hover:text-on-primary text-[32px]">picture_as_pdf</span>
+                </div>
+                <h3 class="font-headline-md text-headline-md text-on-background mb-stack-sm">PDF profissional</h3>
+                <p class="font-body-md text-body-md text-secondary">
+                    Baixe em PDF pronto para assinar, com formatação impecável e layout corporativo padrão mercado.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contract Types Section -->
+    <section class="bg-surface-container-low py-24 mb-32">
+        <div class="px-margin-desktop max-w-container-max mx-auto flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <h2 class="font-headline-lg text-headline-lg text-primary mb-stack-md">Tipos de contrato disponíveis</h2>
+                <p class="font-body-lg text-body-lg text-secondary mb-stack-lg">
+                    Nossa IA foi treinada com milhares de documentos reais para cobrir todas as suas necessidades empresariais.
+                </p>
+                <div class="flex flex-wrap gap-stack-sm">
+                    @foreach (var tipo in Enum.GetValues<TipoContrato>())
+                    {
+                        <span class="bg-white text-primary border border-primary-fixed-dim px-4 py-2 rounded-full font-label-md text-label-md">@tipo.ToLabel()</span>
+                    }
+                </div>
+            </div>
+            <div class="md:w-1/2 relative">
+                <div class="bg-white p-stack-lg rounded-xl shadow-2xl border border-outline-variant relative z-10">
+                    <div class="flex items-center gap-stack-sm mb-stack-md border-b pb-stack-sm">
+                        <span class="material-symbols-outlined text-primary">description</span>
+                        <span class="font-label-md text-label-md uppercase tracking-wider text-secondary">Pré-visualização do Contrato</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="h-4 bg-surface-container rounded w-3/4"></div>
+                        <div class="h-4 bg-surface-container rounded w-full"></div>
+                        <div class="h-4 bg-surface-container rounded w-5/6"></div>
+                        <div class="h-4 bg-surface-container rounded w-1/2"></div>
+                        <div class="pt-8 flex justify-between">
+                            <div class="h-10 bg-primary-fixed w-24 rounded"></div>
+                            <div class="h-10 bg-primary w-24 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Decor element -->
+                <div class="absolute -top-6 -right-6 w-full h-full border-2 border-primary-fixed-dim rounded-xl z-0"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="px-margin-desktop max-w-container-max mx-auto mb-32">
+        <div class="bg-primary text-on-primary rounded-full p-stack-lg md:py-24 md:px-32 text-center shadow-2xl relative overflow-hidden">
+            <div class="relative z-10">
+                <h2 class="font-headline-xl text-headline-xl mb-stack-md">Pronto para criar seu primeiro contrato?</h2>
+                <p class="font-body-lg text-body-lg text-primary-fixed mb-stack-lg opacity-90">
+                    Grátis. Sem cartão de crédito. Comece agora e tenha seu documento em segundos.
+                </p>
+                <a asp-controller="Account" asp-action="Register"
+                   class="bg-on-primary text-primary font-headline-md text-headline-md px-12 py-6 rounded-full hover:bg-primary-fixed transition-colors shadow-lg no-underline inline-block">
+                    Criar conta grátis
+                </a>
+            </div>
+            <!-- Abstract visual elements -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
+        </div>
+    </section>
+</main>

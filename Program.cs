@@ -6,8 +6,19 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+if (!string.IsNullOrEmpty(databaseUrl))
+{
+    var connStr = ParsePostgresUrl(databaseUrl);
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql(connStr));
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -33,8 +44,11 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-app.Urls.Add($"http://0.0.0.0:{port}");
+if (!app.Environment.IsDevelopment())
+{
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+    app.Urls.Add($"http://0.0.0.0:{port}");
+}
 
 if (!app.Environment.IsDevelopment())
 {
@@ -58,13 +72,31 @@ using (var scope = app.Services.CreateScope())
     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     try
     {
-        db.Database.Migrate();
-        logger.LogInformation("Migrations aplicadas com sucesso.");
+        if (string.IsNullOrEmpty(databaseUrl))
+        {
+            db.Database.Migrate();
+            logger.LogInformation("SQLite: migrations aplicadas com sucesso.");
+        }
+        else
+        {
+            db.Database.EnsureCreated();
+            logger.LogInformation("PostgreSQL: banco de dados criado/verificado com sucesso.");
+        }
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "Erro ao aplicar migrations. Verifique a connection string em appsettings.json ou variáveis de ambiente.");
+        logger.LogError(ex, "Erro ao configurar banco de dados. Verifique a connection string ou a variável DATABASE_URL.");
     }
 }
 
 app.Run();
+
+static string ParsePostgresUrl(string url)
+{
+    var uri = new Uri(url);
+    var userInfo = uri.UserInfo.Split(':');
+    var username = Uri.EscapeDataString(userInfo[0]);
+    var password = userInfo.Length > 1 ? Uri.EscapeDataString(userInfo[1]) : "";
+    var database = uri.AbsolutePath.TrimStart('/');
+    return $"Host={uri.Host};Port={uri.Port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+}

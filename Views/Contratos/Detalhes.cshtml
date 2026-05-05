@@ -1,40 +1,45 @@
-@model ContratosIA.Models.Entities.Contrato
+﻿@model ContratosIA.Models.Entities.Contrato
 @{
     ViewData["Title"] = Model.Titulo;
     Layout = "_Layout";
 }
 
-<div class="max-w-6xl mx-auto px-4 py-10">
-    <div class="flex gap-8">
+<div class="pt-28 px-margin-desktop max-w-container-max mx-auto pb-16">
+    <div class="flex flex-col lg:flex-row gap-stack-lg">
 
-        <aside class="w-72 shrink-0">
-            <div class="bg-white p-6 rounded-xl border shadow-sm mb-4">
-                <h2 class="font-bold text-gray-800 mb-4">Detalhes</h2>
-                <dl class="space-y-3 text-sm">
+        <!-- Sidebar -->
+        <aside class="w-full lg:w-80 shrink-0">
+            <div class="bg-surface-container-lowest p-stack-lg rounded-xl shadow-2xl border border-outline-variant mb-4">
+                <div class="flex items-center gap-stack-sm mb-stack-md border-b border-outline-variant pb-stack-md">
+                    <span class="material-symbols-outlined text-primary text-[24px]">info</span>
+                    <h2 class="font-headline-md text-headline-md text-on-background">Detalhes</h2>
+                </div>
+                <dl class="space-y-3 font-body-sm text-body-sm">
                     <div>
-                        <dt class="text-gray-500">Tipo</dt>
-                        <dd class="font-medium">@Model.Tipo.ToLabel()</dd>
+                        <dt class="font-label-sm text-label-sm text-on-surface-variant">Tipo</dt>
+                        <dd class="font-medium text-on-background mt-0.5">@Model.Tipo.ToLabel()</dd>
                     </div>
                     <div>
-                        <dt class="text-gray-500">Prestador</dt>
-                        <dd class="font-medium">@Model.PrestadorNome</dd>
+                        <dt class="font-label-sm text-label-sm text-on-surface-variant">Prestador</dt>
+                        <dd class="font-medium text-on-background mt-0.5">@Model.PrestadorNome</dd>
                     </div>
                     <div>
-                        <dt class="text-gray-500">Contratante</dt>
-                        <dd class="font-medium">@Model.ContratanteNome</dd>
+                        <dt class="font-label-sm text-label-sm text-on-surface-variant">Contratante</dt>
+                        <dd class="font-medium text-on-background mt-0.5">@Model.ContratanteNome</dd>
                     </div>
                     <div>
-                        <dt class="text-gray-500">Valor</dt>
-                        <dd class="font-medium">@Model.Valor.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</dd>
+                        <dt class="font-label-sm text-label-sm text-on-surface-variant">Valor</dt>
+                        <dd class="font-medium text-primary mt-0.5">@Model.Valor.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</dd>
                     </div>
                     <div>
-                        <dt class="text-gray-500">Prazo</dt>
-                        <dd class="font-medium">@Model.Prazo</dd>
+                        <dt class="font-label-sm text-label-sm text-on-surface-variant">Prazo</dt>
+                        <dd class="font-medium text-on-background mt-0.5">@Model.Prazo</dd>
                     </div>
                     <div>
-                        <dt class="text-gray-500">Status</dt>
-                        <dd>
-                            <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                        <dt class="font-label-sm text-label-sm text-on-surface-variant">Status</dt>
+                        <dd class="mt-1">
+                            <span class="inline-flex items-center gap-1 bg-primary-fixed text-primary px-3 py-1 rounded-full font-label-sm text-label-sm">
+                                <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">check_circle</span>
                                 @Model.Status
                             </span>
                         </dd>
@@ -42,33 +47,45 @@
                 </dl>
             </div>
 
+            <!-- Actions -->
             <div class="space-y-2">
                 <a asp-controller="Contratos" asp-action="BaixarPdf" asp-route-id="@Model.Id"
-                   class="block w-full bg-blue-600 text-white px-4 py-3 rounded-lg font-medium text-center hover:bg-blue-700">
-                    &#128229; Baixar PDF
+                   class="flex items-center justify-center gap-2 w-full bg-primary text-on-primary font-label-md text-label-md px-4 py-3 rounded-full hover:shadow-xl transition-all scale-100 active:scale-95 no-underline">
+                    <span class="material-symbols-outlined text-on-primary text-[20px]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">download</span>
+                    Baixar PDF
                 </a>
                 <button onclick="copiarTexto()"
-                        class="block w-full border border-gray-300 text-gray-700 px-4 py-3 rounded-lg font-medium text-center hover:bg-gray-50">
-                    &#128203; Copiar texto
+                        class="flex items-center justify-center gap-2 w-full border-2 border-outline-variant text-on-surface-variant font-label-md text-label-md px-4 py-3 rounded-full hover:bg-surface-container transition-all">
+                    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">content_copy</span>
+                    Copiar texto
                 </button>
                 <form asp-controller="Contratos" asp-action="Regerar" asp-route-id="@Model.Id" method="post">
                     @Html.AntiForgeryToken()
                     <button type="submit"
-                            class="block w-full border border-blue-300 text-blue-600 px-4 py-3 rounded-lg font-medium text-center hover:bg-blue-50"
+                            class="flex items-center justify-center gap-2 w-full border-2 border-primary text-primary font-label-md text-label-md px-4 py-3 rounded-full hover:bg-primary-fixed transition-all"
                             onclick="return confirm('Regerar contrato com IA? O texto atual será substituído.')">
-                        &#10024; Regerar com IA
+                        <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">auto_awesome</span>
+                        Regerar com IA
                     </button>
                 </form>
             </div>
 
-            <div class="mt-4">
+            <div class="mt-stack-md">
                 <a asp-controller="Dashboard" asp-action="Index"
-                   class="text-gray-500 text-sm hover:text-gray-700">&larr; Voltar ao dashboard</a>
+                   class="inline-flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors no-underline">
+                    <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">arrow_back</span>
+                    Voltar ao dashboard
+                </a>
             </div>
         </aside>
 
-        <main class="flex-1 bg-white p-10 rounded-xl border shadow-sm">
-            <div id="contratoTexto" class="font-serif text-[15px] leading-7 whitespace-pre-wrap text-gray-800">@Model.Conteudo</div>
+        <!-- Contract Content -->
+        <main class="flex-1 bg-surface-container-lowest p-stack-lg rounded-xl shadow-2xl border border-outline-variant min-w-0">
+            <div class="flex items-center gap-stack-sm mb-stack-md border-b border-outline-variant pb-stack-md">
+                <span class="material-symbols-outlined text-primary text-[24px]">description</span>
+                <span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Contrato Gerado</span>
+            </div>
+            <div id="contratoTexto" class="font-serif text-[15px] leading-7 whitespace-pre-wrap text-on-background">@Model.Conteudo</div>
         </main>
     </div>
 </div>
@@ -77,7 +94,12 @@
 <script>
 function copiarTexto() {
     const texto = document.getElementById('contratoTexto').innerText;
-    navigator.clipboard.writeText(texto).then(() => alert('Texto copiado!'));
+    navigator.clipboard.writeText(texto).then(() => {
+        const btn = event.currentTarget;
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: \'FILL\' 1, \'wght\' 400, \'GRAD\' 0, \'opsz\' 24;">check</span> Copiado!';
+        setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
+    });
 }
 </script>
 }

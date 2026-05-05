@@ -1,82 +1,123 @@
-@using ContratosIA.Models.Enums
+﻿@using ContratosIA.Models.Enums
 @model ContratosIA.Models.ViewModels.DashboardViewModel
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_Layout";
 }
 
-<div class="max-w-6xl mx-auto px-4 py-10">
-    <div class="flex items-center justify-between mb-8">
+<div class="pt-28 px-margin-desktop max-w-container-max mx-auto pb-16">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-stack-lg gap-stack-md">
         <div>
-            <h1 class="text-2xl font-bold text-gray-800">Olá, @Model.NomeUsuario &#128075;</h1>
-            <p class="text-gray-500">Plano atual: <span class="font-semibold text-blue-600">@Model.Plano</span></p>
+            <h1 class="font-headline-lg text-headline-lg text-on-background flex items-center gap-2">
+                Olá, @Model.NomeUsuario
+                <span class="material-symbols-outlined text-primary text-[32px]" style="font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">waving_hand</span>
+            </h1>
+            <p class="font-body-md text-body-md text-secondary mt-1">
+                Plano atual: <span class="font-semibold text-primary bg-primary-fixed px-3 py-0.5 rounded-full font-label-sm text-label-sm">@Model.Plano</span>
+            </p>
         </div>
         <a asp-controller="Contratos" asp-action="Novo"
-           class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">
-            + Novo contrato
+           class="bg-primary text-on-primary font-body-md text-body-md px-6 py-3 rounded-full hover:shadow-xl transition-all scale-100 active:scale-95 no-underline inline-flex items-center gap-2">
+            <span class="material-symbols-outlined text-on-primary text-[20px]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">add</span>
+            Novo contrato
         </a>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-6 mb-10">
-        <div class="bg-white p-6 rounded-xl border shadow-sm text-center">
-            <p class="text-3xl font-bold text-blue-600">@Model.TotalContratos</p>
-            <p class="text-gray-500 text-sm mt-1">Total de contratos</p>
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg mb-10">
+        <div class="bg-surface p-stack-lg rounded-xl bento-card border border-white text-center group hover:translate-y-[-4px] transition-transform">
+            <div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center mx-auto mb-stack-sm group-hover:bg-primary transition-colors">
+                <span class="material-symbols-outlined text-primary group-hover:text-on-primary text-[24px]">description</span>
+            </div>
+            <p class="font-headline-xl text-headline-xl text-primary">@Model.TotalContratos</p>
+            <p class="font-body-sm text-body-sm text-secondary mt-1">Total de contratos</p>
         </div>
-        <div class="bg-white p-6 rounded-xl border shadow-sm text-center">
-            <p class="text-3xl font-bold text-green-600">@Model.ContratosMes</p>
-            <p class="text-gray-500 text-sm mt-1">Contratos este mês</p>
+        <div class="bg-surface p-stack-lg rounded-xl bento-card border border-white text-center group hover:translate-y-[-4px] transition-transform">
+            <div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center mx-auto mb-stack-sm group-hover:bg-primary transition-colors">
+                <span class="material-symbols-outlined text-primary group-hover:text-on-primary text-[24px]">calendar_month</span>
+            </div>
+            <p class="font-headline-xl text-headline-xl text-primary">@Model.ContratosMes</p>
+            <p class="font-body-sm text-body-sm text-secondary mt-1">Contratos este mês</p>
         </div>
-        <div class="bg-white p-6 rounded-xl border shadow-sm text-center">
-            <p class="text-3xl font-bold text-purple-600">@Model.Plano</p>
-            <p class="text-gray-500 text-sm mt-1">Plano ativo</p>
+        <div class="bg-surface p-stack-lg rounded-xl bento-card border border-white text-center group hover:translate-y-[-4px] transition-transform">
+            <div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center mx-auto mb-stack-sm group-hover:bg-primary transition-colors">
+                <span class="material-symbols-outlined text-primary group-hover:text-on-primary text-[24px]">workspace_premium</span>
+            </div>
+            <p class="font-headline-xl text-headline-xl text-primary">@Model.Plano</p>
+            <p class="font-body-sm text-body-sm text-secondary mt-1">Plano ativo</p>
         </div>
     </div>
 
+    <!-- Contracts List -->
     @if (!Model.Contratos.Any())
     {
-        <div class="text-center py-16 text-gray-400">
-            <p class="text-5xl mb-4">&#128196;</p>
-            <p class="text-lg">Nenhum contrato ainda.</p>
+        <div class="text-center py-16">
+            <div class="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-stack-md">
+                <span class="material-symbols-outlined text-on-surface-variant text-[40px]">note_add</span>
+            </div>
+            <p class="font-headline-md text-headline-md text-on-surface-variant mb-stack-sm">Nenhum contrato ainda</p>
+            <p class="font-body-md text-body-md text-secondary mb-stack-md">Crie seu primeiro contrato com inteligência artificial.</p>
             <a asp-controller="Contratos" asp-action="Novo"
-               class="text-blue-600 font-medium hover:underline mt-2 inline-block">
+               class="bg-primary text-on-primary font-body-md text-body-md px-8 py-3 rounded-full hover:shadow-xl transition-all scale-100 active:scale-95 no-underline inline-flex items-center gap-2">
+                <span class="material-symbols-outlined text-on-primary text-[20px]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">add</span>
                 Criar meu primeiro contrato
             </a>
         </div>
     }
     else
     {
-        <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
-            <table class="w-full text-sm">
-                <thead class="bg-gray-50 border-b">
-                    <tr>
-                        <th class="text-left px-6 py-4 font-medium text-gray-600">Título</th>
-                        <th class="text-left px-6 py-4 font-medium text-gray-600">Tipo</th>
-                        <th class="text-left px-6 py-4 font-medium text-gray-600">Status</th>
-                        <th class="text-left px-6 py-4 font-medium text-gray-600">Data</th>
-                        <th class="px-6 py-4"></th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y">
-                    @foreach (var c in Model.Contratos)
-                    {
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 font-medium">@c.Titulo</td>
-                            <td class="px-6 py-4 text-gray-600">@c.Tipo.ToLabel()</td>
-                            <td class="px-6 py-4">
-                                <span class="px-2 py-1 rounded-full text-xs font-medium
-                                    @(c.Status == StatusContrato.Gerado ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600")">
-                                    @c.Status
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-500">@c.CriadoEm.ToString("dd/MM/yyyy")</td>
-                            <td class="px-6 py-4">
-                                <a asp-controller="Contratos" asp-action="Detalhes" asp-route-id="@c.Id"
-                                   class="text-blue-600 hover:underline font-medium">Ver</a>
-                            </td>
+        <div class="bg-surface rounded-xl bento-card border border-white overflow-hidden">
+            <div class="flex items-center gap-stack-sm px-stack-lg py-4 border-b border-outline-variant">
+                <span class="material-symbols-outlined text-primary text-[20px]">list_alt</span>
+                <h2 class="font-headline-md text-headline-md text-on-background">Meus Contratos</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full font-body-sm text-body-sm">
+                    <thead class="bg-surface-container-low border-b border-outline-variant">
+                        <tr>
+                            <th class="text-left px-stack-lg py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Título</th>
+                            <th class="text-left px-stack-lg py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Tipo</th>
+                            <th class="text-left px-stack-lg py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Status</th>
+                            <th class="text-left px-stack-lg py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Data</th>
+                            <th class="px-stack-lg py-4"></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant">
+                        @foreach (var c in Model.Contratos)
+                        {
+                            <tr class="hover:bg-surface-container-low transition-colors">
+                                <td class="px-stack-lg py-4 font-medium text-on-background">@c.Titulo</td>
+                                <td class="px-stack-lg py-4 text-secondary">@c.Tipo.ToLabel()</td>
+                                <td class="px-stack-lg py-4">
+                                    @if (c.Status == StatusContrato.Gerado)
+                                    {
+                                        <span class="inline-flex items-center gap-1 bg-primary-fixed text-primary px-3 py-1 rounded-full font-label-sm text-label-sm">
+                                            <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">check_circle</span>
+                                            @c.Status
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="inline-flex items-center gap-1 bg-secondary-fixed text-on-secondary-fixed-variant px-3 py-1 rounded-full font-label-sm text-label-sm">
+                                            <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">pending</span>
+                                            @c.Status
+                                        </span>
+                                    }
+                                </td>
+                                <td class="px-stack-lg py-4 text-on-surface-variant">@c.CriadoEm.ToString("dd/MM/yyyy")</td>
+                                <td class="px-stack-lg py-4">
+                                    <a asp-controller="Contratos" asp-action="Detalhes" asp-route-id="@c.Id"
+                                       class="inline-flex items-center gap-1 text-primary font-medium hover:underline no-underline font-body-sm text-body-sm">
+                                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">visibility</span>
+                                        Ver
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     }
 </div>
