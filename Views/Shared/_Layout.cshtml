@@ -119,6 +119,11 @@
     </style>
 </head>
 <body class="bg-background text-on-background font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed min-h-screen flex flex-col">
+    <script>
+        if (window.top !== window.self) {
+            window.top.location.replace(window.self.location.href);
+        }
+    </script>
     <partial name="_SiteHeader" />
     <main class="flex-1">
         @RenderBody()
