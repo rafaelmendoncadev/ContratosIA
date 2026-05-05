@@ -1,0 +1,25 @@
+@using ContratosIA.Models.Enums
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — ContratoIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .font-serif { font-family: 'Times New Roman', Times, serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+    <partial name="_SiteHeader" />
+    <main class="flex-1">
+        @RenderBody()
+    </main>
+    <footer class="bg-white border-t py-6 text-center text-sm text-gray-500">
+        &copy; @DateTime.Now.Year ContratoIA — Contratos jurídicos gerados por IA
+    </footer>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,82 @@
+@using ContratosIA.Models.Enums
+@model ContratosIA.Models.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_Layout";
+}
+
+<div class="max-w-6xl mx-auto px-4 py-10">
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-800">Olá, @Model.NomeUsuario &#128075;</h1>
+            <p class="text-gray-500">Plano atual: <span class="font-semibold text-blue-600">@Model.Plano</span></p>
+        </div>
+        <a asp-controller="Contratos" asp-action="Novo"
+           class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">
+            + Novo contrato
+        </a>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-white p-6 rounded-xl border shadow-sm text-center">
+            <p class="text-3xl font-bold text-blue-600">@Model.TotalContratos</p>
+            <p class="text-gray-500 text-sm mt-1">Total de contratos</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border shadow-sm text-center">
+            <p class="text-3xl font-bold text-green-600">@Model.ContratosMes</p>
+            <p class="text-gray-500 text-sm mt-1">Contratos este mês</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl border shadow-sm text-center">
+            <p class="text-3xl font-bold text-purple-600">@Model.Plano</p>
+            <p class="text-gray-500 text-sm mt-1">Plano ativo</p>
+        </div>
+    </div>
+
+    @if (!Model.Contratos.Any())
+    {
+        <div class="text-center py-16 text-gray-400">
+            <p class="text-5xl mb-4">&#128196;</p>
+            <p class="text-lg">Nenhum contrato ainda.</p>
+            <a asp-controller="Contratos" asp-action="Novo"
+               class="text-blue-600 font-medium hover:underline mt-2 inline-block">
+                Criar meu primeiro contrato
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+            <table class="w-full text-sm">
+                <thead class="bg-gray-50 border-b">
+                    <tr>
+                        <th class="text-left px-6 py-4 font-medium text-gray-600">Título</th>
+                        <th class="text-left px-6 py-4 font-medium text-gray-600">Tipo</th>
+                        <th class="text-left px-6 py-4 font-medium text-gray-600">Status</th>
+                        <th class="text-left px-6 py-4 font-medium text-gray-600">Data</th>
+                        <th class="px-6 py-4"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y">
+                    @foreach (var c in Model.Contratos)
+                    {
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium">@c.Titulo</td>
+                            <td class="px-6 py-4 text-gray-600">@c.Tipo.ToLabel()</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium
+                                    @(c.Status == StatusContrato.Gerado ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600")">
+                                    @c.Status
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-500">@c.CriadoEm.ToString("dd/MM/yyyy")</td>
+                            <td class="px-6 py-4">
+                                <a asp-controller="Contratos" asp-action="Detalhes" asp-route-id="@c.Id"
+                                   class="text-blue-600 hover:underline font-medium">Ver</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

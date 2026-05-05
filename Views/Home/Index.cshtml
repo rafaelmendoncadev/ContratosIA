@@ -1,0 +1,63 @@
+@using ContratosIA.Models.Enums
+@{
+    ViewData["Title"] = "Contratos jurídicos profissionais em minutos";
+    Layout = "_Layout";
+}
+
+<section class="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-24">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        <h1 class="text-5xl font-bold mb-6">Gere contratos jurídicos profissionais em minutos</h1>
+        <p class="text-xl text-blue-100 mb-10">
+            Powered by IA. Sem advogados. Sem complicação.
+            Prestação de serviços, software, consultoria e muito mais.
+        </p>
+        <a asp-controller="Account" asp-action="Register"
+           class="bg-white text-blue-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 inline-block">
+            Começar grátis
+        </a>
+    </div>
+</section>
+
+<section class="py-20 max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12">Por que usar o ContratoIA?</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-xl shadow-sm border text-center">
+            <div class="text-4xl mb-4">&#9889;</div>
+            <h3 class="text-xl font-semibold mb-2">Rápido</h3>
+            <p class="text-gray-600">Contrato completo gerado em menos de 1 minuto</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border text-center">
+            <div class="text-4xl mb-4">&#9878;</div>
+            <h3 class="text-xl font-semibold mb-2">Jurídico</h3>
+            <p class="text-gray-600">Cláusulas obrigatórias brasileiras incluídas automaticamente</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border text-center">
+            <div class="text-4xl mb-4">&#128196;</div>
+            <h3 class="text-xl font-semibold mb-2">PDF profissional</h3>
+            <p class="text-gray-600">Baixe em PDF pronto para assinar</p>
+        </div>
+    </div>
+</section>
+
+<section class="bg-white py-16">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-8">Tipos de contrato disponíveis</h2>
+        <div class="flex flex-wrap justify-center gap-3">
+            @foreach (var tipo in Enum.GetValues<TipoContrato>())
+            {
+                <span class="bg-blue-50 text-blue-700 px-4 py-2 rounded-full font-medium">
+                    @tipo.ToLabel()
+                </span>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="py-20 text-center bg-gray-50">
+    <h2 class="text-3xl font-bold mb-4">Pronto para criar seu primeiro contrato?</h2>
+    <p class="text-gray-600 mb-8">Grátis. Sem cartão de crédito.</p>
+    <a asp-controller="Account" asp-action="Register"
+       class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 inline-block">
+        Criar conta grátis
+    </a>
+</section>

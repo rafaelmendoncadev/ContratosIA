@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: contratoia
+    runtime: docker
+    plan: free
+    region: oregon
+    branch: main
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: OpenRouter__ApiKey
+        sync: false
+      - key: OpenRouter__Model
+        value: deepseek/deepseek-v4-pro
+      - key: OpenRouter__BaseUrl
+        value: https://openrouter.ai/api/v1
+    healthCheckPath: /
+    autoDeploy: true

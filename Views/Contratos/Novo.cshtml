@@ -1,0 +1,174 @@
+@using ContratosIA.Models.Enums
+@model ContratosIA.Models.ViewModels.ContratoWizardViewModel
+@{
+    ViewData["Title"] = "Novo Contrato";
+    Layout = "_Layout";
+}
+
+<div class="max-w-3xl mx-auto px-4 py-10" x-data="wizard()">
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl mb-6">
+            <p class="font-semibold mb-1">Erro ao gerar contrato:</p>
+            <ul class="list-disc list-inside text-sm">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="mb-8">
+        <div class="flex justify-between text-sm text-gray-500 mb-2">
+            <span>Passo <span x-text="step"></span> de 4</span>
+            <span x-text="stepLabel()"></span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-blue-600 h-2 rounded-full transition-all" :style="`width: ${(step/4)*100}%`"></div>
+        </div>
+    </div>
+
+    <form asp-action="Novo" method="post" id="wizardForm">
+        @Html.AntiForgeryToken()
+
+        <div x-show="step === 1" x-cloak class="bg-white p-8 rounded-2xl shadow-sm border">
+            <h2 class="text-xl font-bold mb-6">Qual tipo de contrato?</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                @foreach (var tipo in Enum.GetValues<TipoContrato>())
+                {
+                    <label class="cursor-pointer">
+                        <input type="radio" asp-for="Tipo" value="@tipo"
+                               x-model="formData.Tipo" class="sr-only peer" />
+                        <div class="border-2 rounded-xl p-4 peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:border-gray-300 transition">
+                            <p class="font-medium">@tipo.ToLabel()</p>
+                        </div>
+                    </label>
+                }
+            </div>
+            <div class="flex justify-end mt-6">
+                <button type="button" @@click="nextStep()"
+                        class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-blue-700">
+                    Próximo &rarr;
+                </button>
+            </div>
+        </div>
+
+        <div x-show="step === 2" x-cloak class="bg-white p-8 rounded-2xl shadow-sm border">
+            <h2 class="text-xl font-bold mb-6">Dados do Prestador</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome completo / Razão Social</label>
+                    <input asp-for="PrestadorNome" x-model="formData.PrestadorNome"
+                           class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">CPF / CNPJ</label>
+                    <input asp-for="PrestadorCpfCnpj" x-model="formData.PrestadorCpfCnpj"
+                           class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Endereço completo</label>
+                    <input asp-for="PrestadorEndereco" x-model="formData.PrestadorEndereco"
+                           class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                </div>
+            </div>
+            <div class="flex justify-between mt-6">
+                <button type="button" @@click="prevStep()"
+                        class="text-gray-600 px-6 py-2.5 rounded-lg font-medium hover:bg-gray-100">&larr; Voltar</button>
+                <button type="button" @@click="nextStep()"
+                        class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-blue-700">Próximo &rarr;</button>
+            </div>
+        </div>
+
+        <div x-show="step === 3" x-cloak class="bg-white p-8 rounded-2xl shadow-sm border">
+            <h2 class="text-xl font-bold mb-6">Dados do Contratante</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome completo / Razão Social</label>
+                    <input asp-for="ContratanteNome" x-model="formData.ContratanteNome"
+                           class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">CPF / CNPJ</label>
+                    <input asp-for="ContratanteCpfCnpj" x-model="formData.ContratanteCpfCnpj"
+                           class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Endereço completo</label>
+                    <input asp-for="ContratanteEndereco" x-model="formData.ContratanteEndereco"
+                           class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                </div>
+            </div>
+            <div class="flex justify-between mt-6">
+                <button type="button" @@click="prevStep()"
+                        class="text-gray-600 px-6 py-2.5 rounded-lg font-medium hover:bg-gray-100">&larr; Voltar</button>
+                <button type="button" @@click="nextStep()"
+                        class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-blue-700">Próximo &rarr;</button>
+            </div>
+        </div>
+
+        <div x-show="step === 4" x-cloak class="bg-white p-8 rounded-2xl shadow-sm border">
+            <h2 class="text-xl font-bold mb-6">Objeto do contrato</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Descrição do serviço
+                        <span class="text-gray-400 font-normal">(máx. 1000 caracteres)</span>
+                    </label>
+                    <textarea asp-for="DescricaoServico" x-model="formData.DescricaoServico"
+                              rows="5" maxlength="1000"
+                              class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"></textarea>
+                    <p class="text-right text-xs text-gray-400 mt-1">
+                        <span x-text="formData.DescricaoServico?.length ?? 0"></span>/1000
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Valor (R$)</label>
+                        <input asp-for="Valor" type="number" step="0.01" x-model="formData.Valor"
+                               class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Prazo</label>
+                        <input asp-for="Prazo" x-model="formData.Prazo" placeholder="Ex: 30 dias, 3 meses"
+                               class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Cláusulas extras (opcional)</label>
+                    <textarea asp-for="ClausulasExtras" x-model="formData.ClausulasExtras"
+                              rows="3"
+                              class="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"></textarea>
+                </div>
+            </div>
+            <div class="flex justify-between mt-6">
+                <button type="button" @@click="prevStep()"
+                        class="text-gray-600 px-6 py-2.5 rounded-lg font-medium hover:bg-gray-100">&larr; Voltar</button>
+                <button type="submit"
+                        class="bg-green-600 text-white px-8 py-2.5 rounded-lg font-semibold hover:bg-green-700 flex items-center gap-2">
+                    <span>&#10024; Gerar contrato com IA</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+<script>
+function wizard() {
+    return {
+        step: 1,
+        formData: { Tipo: '', PrestadorNome: '', PrestadorCpfCnpj: '', PrestadorEndereco: '',
+                     ContratanteNome: '', ContratanteCpfCnpj: '', ContratanteEndereco: '',
+                     DescricaoServico: '', Valor: '', Prazo: '', ClausulasExtras: '' },
+        stepLabel() {
+            return ['Tipo de contrato', 'Dados do Prestador', 'Dados do Contratante', 'Objeto e valor'][this.step - 1];
+        },
+        nextStep() { if (this.step < 4) this.step++; },
+        prevStep() { if (this.step > 1) this.step--; }
+    }
+}
+</script>
+}
