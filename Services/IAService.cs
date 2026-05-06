@@ -19,7 +19,9 @@ public class IAService : IIAService
     {
         _httpClient = httpClient;
         _logger = logger;
-        _apiKey = config["OpenRouter:ApiKey"] ?? throw new Exception("Chave API do OpenRouter não configurada");
+        _apiKey = string.IsNullOrWhiteSpace(config["OpenRouter:ApiKey"])
+            ? throw new Exception("Chave API do OpenRouter não configurada. Defina OpenRouter__ApiKey como variável de ambiente ou em appsettings.Development.json.")
+            : config["OpenRouter:ApiKey"]!;
         _model = config["OpenRouter:Model"] ?? "deepseek/deepseek-v4-pro";
         _baseUrl = config["OpenRouter:BaseUrl"] ?? "https://openrouter.ai/api/v1";
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);

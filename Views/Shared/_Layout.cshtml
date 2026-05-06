@@ -116,6 +116,21 @@
         }
         .font-serif { font-family: 'Times New Roman', Times, serif; }
         body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+        /* ── Logo ── */
+        .nav-logo svg { transition: transform 0.3s cubic-bezier(.34,1.56,.64,1); }
+        .nav-logo:hover svg { transform: scale(1.05); }
+        .nav-logo .logo-sparkle {
+            transform-origin: 24px 22px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .nav-logo:hover .logo-sparkle {
+            animation: sparkle-glow 1.4s ease-in-out infinite;
+        }
+        @@keyframes sparkle-glow {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.25); opacity: 0.75; }
+        }
     </style>
 </head>
 <body class="bg-background text-on-background font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed min-h-screen flex flex-col">
@@ -130,7 +145,16 @@
     </main>
     <footer class="w-full py-stack-lg px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-stack-md bg-surface-container-low border-t border-outline-variant">
         <div class="flex flex-col md:flex-row items-center gap-stack-lg">
-            <div class="font-headline-md text-headline-md font-bold text-primary">ContratoIA</div>
+            <a href="/" class="flex items-center gap-2 no-underline">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 shrink-0">
+                    <path d="M7 3C7 2.45 7.45 2 8 2H18L25 9V28C25 28.55 24.55 29 24 29H8C7.45 29 7 28.55 7 28V3Z" fill="#00288e"/>
+                    <path d="M18 2V7C18 8.1 18.9 9 20 9H25L18 2Z" fill="#001453" fill-opacity="0.45"/>
+                    <rect x="11" y="14" width="9" height="1.8" rx="0.9" fill="white" fill-opacity="0.85"/>
+                    <rect x="11" y="18.5" width="5.5" height="1.8" rx="0.9" fill="white" fill-opacity="0.55"/>
+                    <path d="M24 17.5C24.5 20 26.5 21.5 29 22C26.5 22.5 24.5 24 24 26.5C23.5 24 21.5 22.5 19 22C21.5 21.5 23.5 20 24 17.5Z" fill="#b8c4ff"/>
+                </svg>
+                <span class="font-headline-md text-headline-md font-bold text-primary">Contrato<span class="text-primary-fixed-dim">IA</span></span>
+            </a>
             <p class="font-body-sm text-body-sm text-on-surface-variant">&copy; @DateTime.Now.Year ContratoIA. Todos os direitos reservados.</p>
         </div>
         <div class="flex gap-stack-md">

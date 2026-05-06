@@ -1,5 +1,16 @@
 ﻿<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto bg-surface/80 backdrop-blur-md">
-    <a href="/" class="font-headline-md text-headline-md font-bold text-primary no-underline">ContratoIA</a>
+    <a href="/" class="flex items-center gap-2.5 no-underline group nav-logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 shrink-0">
+            <path d="M7 3C7 2.45 7.45 2 8 2H18L25 9V28C25 28.55 24.55 29 24 29H8C7.45 29 7 28.55 7 28V3Z" fill="#00288e"/>
+            <path d="M18 2V7C18 8.1 18.9 9 20 9H25L18 2Z" fill="#001453" fill-opacity="0.45"/>
+            <rect x="11" y="14" width="9" height="1.8" rx="0.9" fill="white" fill-opacity="0.85"/>
+            <rect x="11" y="18.5" width="5.5" height="1.8" rx="0.9" fill="white" fill-opacity="0.55"/>
+            <g class="logo-sparkle">
+                <path d="M24 17.5C24.5 20 26.5 21.5 29 22C26.5 22.5 24.5 24 24 26.5C23.5 24 21.5 22.5 19 22C21.5 21.5 23.5 20 24 17.5Z" fill="#b8c4ff"/>
+            </g>
+        </svg>
+        <span class="font-headline-md text-headline-md font-bold text-primary">Contrato<span class="text-primary-fixed-dim">IA</span></span>
+    </a>
     <nav class="hidden md:flex items-center gap-stack-lg">
         @if (User.Identity?.IsAuthenticated == true)
         {
